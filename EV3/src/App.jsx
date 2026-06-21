@@ -9,6 +9,7 @@ const STORAGE_KEY = 'ev3-barberia-citas'
 
 const crearCitaInicial = () => ({
   cliente: '',
+  telefono: '',
   servicioId: serviciosData[0]?.id ?? '',
   barberoId: barberosData[0]?.id ?? '',
   fecha: '',
@@ -97,8 +98,15 @@ function App() {
   const manejarSubmit = (evento) => {
     evento.preventDefault()
 
-    if (!formulario.cliente || !formulario.fecha || !formulario.hora) {
-      setMensaje('Completa nombre, fecha y hora para agendar la cita.')
+    if (!formulario.cliente || !formulario.fecha || !formulario.hora || !formulario.telefono) {
+      setMensaje('Completa nombre, teléfono, fecha y hora para agendar la cita.')
+      return
+    }
+
+    const regexTelefonoChileno = /^\+56\s?9?\d{8,9}$/
+
+    if (!regexTelefonoChileno.test(formulario.telefono.replace(/\s/g, ''))) {
+      setMensaje('El teléfono debe cumplir con el formato chileno (+569XXXXXXXX o +5629XXXXXXX).')
       return
     }
 

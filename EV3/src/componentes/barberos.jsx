@@ -1,3 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
+import PropTypes from 'prop-types'
+
 export const barberos = [
 	{
 		id: 'diego-torres',
@@ -58,4 +61,17 @@ export default function Barberos({
 			</div>
 		</section>
 	)
+}
+
+Barberos.propTypes = {
+	barberos: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string.isRequired,
+			nombre: PropTypes.string.isRequired,
+			especialidad: PropTypes.string.isRequired,
+			horario: PropTypes.string.isRequired,
+		})
+	).isRequired,
+	barberoSeleccionadoId: PropTypes.string.isRequired,
+	onSeleccionar: PropTypes.func.isRequired,
 }

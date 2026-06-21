@@ -1,4 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
+import PropTypes from 'prop-types'
+
 export const servicios = [
 	{
 		id: 'corte-premium',
@@ -71,4 +73,18 @@ export default function Servicios({
 			</div>
 		</section>
 	)
+}
+
+Servicios.propTypes = {
+	servicios: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string.isRequired,
+			nombre: PropTypes.string.isRequired,
+			duracion: PropTypes.number.isRequired,
+			precio: PropTypes.string.isRequired,
+			descripcion: PropTypes.string.isRequired,
+		})
+	).isRequired,
+	servicioSeleccionadoId: PropTypes.string.isRequired,
+	onSeleccionar: PropTypes.func.isRequired,
 }

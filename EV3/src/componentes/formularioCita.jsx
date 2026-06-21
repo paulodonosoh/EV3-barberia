@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 export default function FormularioCita({
 	formulario,
 	onChange,
@@ -24,6 +26,17 @@ export default function FormularioCita({
 						value={formulario.cliente}
 						onChange={(evento) => onChange('cliente', evento.target.value)}
 						placeholder="Nombre del cliente"
+					/>
+				</label>
+
+				<label>
+					<span>Teléfono</span>
+					<input
+						type="tel"
+						name="telefono"
+						value={formulario.telefono}
+						onChange={(evento) => onChange('telefono', evento.target.value)}
+						placeholder="+569XXXXXXXX o +5629XXXXXXX"
 					/>
 				</label>
 
@@ -96,4 +109,29 @@ export default function FormularioCita({
 			</form>
 		</section>
 	)
+}
+FormularioCita.propTypes = {
+	formulario: PropTypes.shape({
+		cliente: PropTypes.string.isRequired,
+		telefono: PropTypes.string.isRequired,
+		servicioId: PropTypes.string.isRequired,
+		barberoId: PropTypes.string.isRequired,
+		fecha: PropTypes.string.isRequired,
+		hora: PropTypes.string.isRequired,
+		notas: PropTypes.string.isRequired,
+	}).isRequired,
+	onChange: PropTypes.func.isRequired,
+	onSubmit: PropTypes.func.isRequired,
+	servicios: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string.isRequired,
+			nombre: PropTypes.string.isRequired,
+		})
+	).isRequired,
+	barberos: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string.isRequired,
+			nombre: PropTypes.string.isRequired,
+		})
+	).isRequired,
 }
