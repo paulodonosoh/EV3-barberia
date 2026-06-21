@@ -36,9 +36,10 @@ export default function Servicios({
 	servicios: listaServicios,
 	servicioSeleccionadoId,
 	onSeleccionar,
+	...sectionProps
 }) {
 	return (
-		<section className="panel panel-span-2">
+		<section className="panel panel-span-2" {...sectionProps}>
 			<div className="panel-head">
 				<div>
 					<p className="panel-kicker">Servicios</p>

@@ -16,7 +16,7 @@ const obtenerNombreBarbero = (barberoId) =>
 
 export default function ListaCitas({ citas, onCancelar }) {
 	return (
-		<section className="panel panel-span-2 panel-list">
+		<section className="panel panel-span-2 panel-list" id="citas">
 			<div className="panel-head">
 				<div>
 					<p className="panel-kicker">Agenda</p>

@@ -40,6 +40,14 @@ const citasIniciales = [
   },
 ]
 
+const seccionesNavegacion = [
+  { id: 'inicio', etiqueta: 'Inicio' },
+  { id: 'servicios', etiqueta: 'Servicios' },
+  { id: 'barberos', etiqueta: 'Barberos' },
+  { id: 'reserva', etiqueta: 'Reserva' },
+  { id: 'citas', etiqueta: 'Citas' },
+]
+
 const convertirHoraAMinutos = (hora) => {
   const [horas, minutos] = hora.split(':').map(Number)
   return horas * 60 + minutos
@@ -51,7 +59,7 @@ const horaEstaDentroDelHorario = (hora, horarioInicio, horarioFin) => {
 }
 
 const cargarCitasGuardadas = () => {
-  if (typeof globalThis.localStorage === 'undefined') {
+  if (globalThis.localStorage === undefined) {
     return citasIniciales
   }
 
@@ -151,7 +159,21 @@ function App() {
 
   return (
     <main className="app-shell">
-      <section className="hero-panel">
+      <nav className="topbar" aria-label="Navegacion principal">
+        <a className="brand-mark" href="#inicio">
+          Barberia EV3
+        </a>
+
+        <div className="topbar-links">
+          {seccionesNavegacion.map((seccion) => (
+            <a key={seccion.id} href={`#${seccion.id}`}>
+              {seccion.etiqueta}
+            </a>
+          ))}
+        </div>
+      </nav>
+
+      <section className="hero-panel" id="inicio">
         <div className="hero-copy">
           <p className="eyebrow">Barberia EV3</p>
           <h1>Agenda de citas simple, clara y lista para crecer.</h1>
@@ -202,18 +224,21 @@ function App() {
 
       <section className="content-grid">
         <Servicios
+          id="servicios"
           servicios={serviciosData}
           servicioSeleccionadoId={formulario.servicioId}
           onSeleccionar={manejarSeleccionServicio}
         />
 
         <Barberos
+          id="barberos"
           barberos={barberosData}
           barberoSeleccionadoId={formulario.barberoId}
           onSeleccionar={manejarSeleccionBarbero}
         />
 
         <FormularioCita
+          id="reserva"
           formulario={formulario}
           onChange={actualizarCampo}
           onSubmit={manejarSubmit}

@@ -31,9 +31,10 @@ export default function Barberos({
 	barberos: listaBarberos,
 	barberoSeleccionadoId,
 	onSeleccionar,
+	...sectionProps
 }) {
 	return (
-		<section className="panel">
+		<section className="panel" {...sectionProps}>
 			<div className="panel-head">
 				<div>
 					<p className="panel-kicker">Barberos</p>

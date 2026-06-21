@@ -6,11 +6,12 @@ export default function FormularioCita({
 	onSubmit,
 	servicios,
 	barberos,
+	...sectionProps
 }) {
 	const barberoSeleccionado = barberos.find((barbero) => barbero.id === formulario.barberoId)
 
 	return (
-		<section className="panel panel-form">
+		<section className="panel panel-form" {...sectionProps}>
 			<div className="panel-head">
 				<div>
 					<p className="panel-kicker">Nueva cita</p>
