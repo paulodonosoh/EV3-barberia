@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Barberos, { barberos as barberosData } from './componentes/barberos.jsx'
 import FormularioCita from './componentes/formularioCita.jsx'
 import ListaCitas from './componentes/listaCitas.jsx'
 import Servicios, { servicios as serviciosData } from './componentes/servicios.jsx'
+
+const STORAGE_KEY = 'ev3-barberia-citas'
 
 const crearCitaInicial = () => ({
   cliente: '',
@@ -37,10 +39,38 @@ const citasIniciales = [
   },
 ]
 
+const cargarCitasGuardadas = () => {
+  if (typeof window === 'undefined') {
+    return citasIniciales
+  }
+
+  try {
+    const citasGuardadas = window.localStorage.getItem(STORAGE_KEY)
+
+    if (!citasGuardadas) {
+      return citasIniciales
+    }
+
+    const citasParseadas = JSON.parse(citasGuardadas)
+
+    return Array.isArray(citasParseadas) ? citasParseadas : citasIniciales
+  } catch {
+    return citasIniciales
+  }
+}
+
 function App() {
   const [formulario, setFormulario] = useState(crearCitaInicial)
-  const [citas, setCitas] = useState(citasIniciales)
+  const [citas, setCitas] = useState(cargarCitasGuardadas)
   const [mensaje, setMensaje] = useState('Selecciona el servicio y registra una nueva cita.')
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(citas))
+    } catch {
+      // Ignorar errores de almacenamiento y seguir con el estado en memoria.
+    }
+  }, [citas])
 
   const servicioSeleccionado = serviciosData.find(
     (servicio) => servicio.id === formulario.servicioId,
