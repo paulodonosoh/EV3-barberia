@@ -6,21 +6,26 @@ export const barberos = [
 		id: 'diego-torres',
 		nombre: 'Diego Torres',
 		especialidad: 'Fade y acabados',
-		horario: '09:00 - 18:00',
+		horarioInicio: '09:00',
+		horarioFin: '18:00',
 	},
 	{
 		id: 'marco-leon',
 		nombre: 'Marco Leon',
 		especialidad: 'Barba y perfilado',
-		horario: '10:00 - 19:00',
+		horarioInicio: '10:00',
+		horarioFin: '19:00',
 	},
 	{
 		id: 'alan-ruiz',
 		nombre: 'Alan Ruiz',
 		especialidad: 'Diseño y estilo',
-		horario: '11:00 - 20:00',
+		horarioInicio: '11:00',
+		horarioFin: '20:00',
 	},
 ]
+
+const formatearHorario = (horarioInicio, horarioFin) => `${horarioInicio} - ${horarioFin}`
 
 export default function Barberos({
 	barberos: listaBarberos,
@@ -52,7 +57,7 @@ export default function Barberos({
 							<strong>{barbero.nombre}</strong>
 							<p>{barbero.especialidad}</p>
 							<div className="choice-card-meta">
-								<span>{barbero.horario}</span>
+								<span>{formatearHorario(barbero.horarioInicio, barbero.horarioFin)}</span>
 								<span>{activo ? 'Asignado' : 'Elegir'}</span>
 							</div>
 						</button>
@@ -69,7 +74,8 @@ Barberos.propTypes = {
 			id: PropTypes.string.isRequired,
 			nombre: PropTypes.string.isRequired,
 			especialidad: PropTypes.string.isRequired,
-			horario: PropTypes.string.isRequired,
+			horarioInicio: PropTypes.string.isRequired,
+			horarioFin: PropTypes.string.isRequired,
 		})
 	).isRequired,
 	barberoSeleccionadoId: PropTypes.string.isRequired,

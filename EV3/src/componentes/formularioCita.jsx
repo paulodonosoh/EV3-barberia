@@ -7,6 +7,8 @@ export default function FormularioCita({
 	servicios,
 	barberos,
 }) {
+	const barberoSeleccionado = barberos.find((barbero) => barbero.id === formulario.barberoId)
+
 	return (
 		<section className="panel panel-form">
 			<div className="panel-head">
@@ -87,6 +89,9 @@ export default function FormularioCita({
 							type="time"
 							name="hora"
 							value={formulario.hora}
+							min={barberoSeleccionado?.horarioInicio}
+							max={barberoSeleccionado?.horarioFin}
+							step="900"
 							onChange={(evento) => onChange('hora', evento.target.value)}
 						/>
 					</label>

@@ -40,13 +40,23 @@ const citasIniciales = [
   },
 ]
 
+const convertirHoraAMinutos = (hora) => {
+  const [horas, minutos] = hora.split(':').map(Number)
+  return horas * 60 + minutos
+}
+
+const horaEstaDentroDelHorario = (hora, horarioInicio, horarioFin) => {
+  const minutosHora = convertirHoraAMinutos(hora)
+  return minutosHora >= convertirHoraAMinutos(horarioInicio) && minutosHora <= convertirHoraAMinutos(horarioFin)
+}
+
 const cargarCitasGuardadas = () => {
-  if (typeof window === 'undefined') {
+  if (typeof globalThis.localStorage === 'undefined') {
     return citasIniciales
   }
 
   try {
-    const citasGuardadas = window.localStorage.getItem(STORAGE_KEY)
+    const citasGuardadas = globalThis.localStorage.getItem(STORAGE_KEY)
 
     if (!citasGuardadas) {
       return citasIniciales
@@ -67,7 +77,7 @@ function App() {
 
   useEffect(() => {
     try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(citas))
+      globalThis.localStorage.setItem(STORAGE_KEY, JSON.stringify(citas))
     } catch {
       // Ignorar errores de almacenamiento y seguir con el estado en memoria.
     }
@@ -107,6 +117,20 @@ function App() {
 
     if (!regexTelefonoChileno.test(formulario.telefono.replace(/\s/g, ''))) {
       setMensaje('El teléfono debe cumplir con el formato chileno (+569XXXXXXXX o +5629XXXXXXX).')
+      return
+    }
+
+    if (
+      barberoSeleccionado &&
+      !horaEstaDentroDelHorario(
+        formulario.hora,
+        barberoSeleccionado.horarioInicio,
+        barberoSeleccionado.horarioFin,
+      )
+    ) {
+      setMensaje(
+        `La hora debe estar dentro del horario de ${barberoSeleccionado.nombre} (${barberoSeleccionado.horarioInicio} - ${barberoSeleccionado.horarioFin}).`,
+      )
       return
     }
 
